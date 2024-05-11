@@ -23,12 +23,22 @@ struct Time : Hashable, Codable {
     var hour: Int
     var minute: Int
 
+    var isPm: Bool {
+        hour >= 12
+    }
     init(hour: Int, minute: Int) {
         self.hour = hour
         self.minute = minute
     }
+    
+    private func formatMinute() -> String {
+        minute == 0 ? "00" : String(minute)
+    }
     func toString() -> String {
-        "\(hour):\(minute == 0 ? "00" : String(minute))"
+        "\(hour >= 13 ? hour - 12 : hour):\(formatMinute()) \(isPm ? "PM" : "AM")"
+    }
+    func toMilitary() -> String {
+        "\(hour):\(formatMinute())"
     }
 }
 
