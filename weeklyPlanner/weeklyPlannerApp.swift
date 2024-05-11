@@ -10,23 +10,23 @@ import SwiftData
 
 @main
 struct weeklyPlannerApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
-
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
         }
-        .modelContainer(sharedModelContainer)
+        .modelContainer(for: [ChosenSettings.self, Event.self])
+    }
+}
+
+struct RootView: View {
+    @Environment(\.modelContext) private var context
+    @Query private var settings: [ChosenSettings]
+    
+    var body: some View {
+        ContentView().onAppear() {
+            if settings.isEmpty {
+                context.insert(ChosenSettings())
+            }
+        }.environment(settings.first ?? ChosenSettings())
     }
 }
