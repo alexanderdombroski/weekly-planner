@@ -1,32 +1,33 @@
 # Overview
 
-{Important! Do not say in this section that this is college assignment. Talk about what you are trying to accomplish as a software engineer to further your learning.}
+This is a weekly scheduler app programmed in Swift that allows you to create events and store their related data persistantly. Event names can be colored and will be organized by day. Days can be hidden if you have no desire to add events on a specific day. 
 
-{Provide a description of the software that you wrote to demonstrate the Kotlin language.}
+I wanted to create a calendar app that is made specifically for repeating events that contains **right amount** of customization. Many normal calendar apps have far much customization and the UI isn't always as readable. This served as a great oppourtunity to learn to integrate SwiftData and SwiftUI into an app, and further solidify my understanding of the Swift language. 
 
-{Describe your purpose for writing this software.}
-
-{Provide a link to your YouTube demonstration. It should be a 4-5 minute demo of the software running and a walkthrough of the code. Focus should be on sharing what you learned about the language syntax.}
-
-[Software Demo Video](http://youtube.link.goes.here)
+[App Demo Video](https://youtu.be/0bVjflpRWOY)
+[Code Overview](https://youtu.be/u_TQBfzSaeg)
 
 # Development Environment
 
-{Describe the tools that you used to develop the software}
+## IDE
+* XCode - Apple's IDE for Swift, Objective-C, and other languages
+* GitHub - Publishing files and supplimenting git version control.
 
-{Describe the programming language that you used and any libraries.}
+## Language and Libraries
+* Swift - Apple's high-level development language for programming apps on all their products. 
+* SwiftUI - An improvement to the storyboarding Swift used to use. Creates a flexible UI easily
+* SwiftData - A library that can be used in place of core data for newer Apple Devices. Makes persistant data easy without custom filewriting and can expand functionality of filewriting for document-based apps 
 
 # Useful Websites
 
-{Make a list of websites that you found helpful in this project}
-
-- [Web Site Name](http://url.link.goes.here)
-- [Web Site Name](http://url.link.goes.here)
+- [Hacking With Swift](https://www.hackingwithswift.com/100/swiftui/) I've been working through these Swift tutorials to learn the language.
+- [SwiftData Documentation](https://developer.apple.com/documentation/swiftdata)
+- [SwiftData Tutorial for Settings](https://www.youtube.com/watch?v=UbwYMSDmg2I)
 
 # Future Work
 
-{Make a list of things that you need to fix, improve, and add in the future.}
+- 12:00 PM and 12 AM don't display properly in Military time
+- Sort Events by time
+- Add an option to edit events
 
-- Item 1
-- Item 2
-- Item 3
+I also could add widgets to display the current day outside the app.
