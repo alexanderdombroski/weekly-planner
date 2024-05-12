@@ -4,6 +4,8 @@ This is a weekly scheduler app programmed in Swift that allows you to create eve
 
 I wanted to create a calendar app that is made specifically for repeating events that contains **right amount** of customization. Many normal calendar apps have far much customization and the UI isn't always as readable. This served as a great oppourtunity to learn to integrate SwiftData and SwiftUI into an app, and further solidify my understanding of the Swift language. 
 
+## Videos
+
 [App Demo Video](https://youtu.be/0bVjflpRWOY)
 [Code Overview](https://youtu.be/u_TQBfzSaeg)
 
