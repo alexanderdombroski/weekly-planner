@@ -22,7 +22,7 @@ extension String {
             "purple": .purple
         ]
         
-        if let color = colorMappings[self.lowercased()] {
+        if let color = colorMappings[self] {
             return color
         } else {
             // Return black if the description does not match any color
