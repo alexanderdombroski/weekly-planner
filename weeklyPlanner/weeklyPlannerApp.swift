@@ -14,10 +14,11 @@ struct weeklyPlannerApp: App {
         WindowGroup {
             RootView()
         }
-        .modelContainer(for: [ChosenSettings.self, Event.self])
+        .modelContainer(for: [ChosenSettings.self, Event.self]) // Format the SwiftData container
     }
 }
 
+// Loading Screen
 struct RootView: View {
     @Environment(\.modelContext) private var context
     @Query private var settings: [ChosenSettings]
@@ -25,8 +26,8 @@ struct RootView: View {
     var body: some View {
         ContentView().onAppear() {
             if settings.isEmpty {
-                context.insert(ChosenSettings())
+                context.insert(ChosenSettings()) // Init settings if there is none and insert
             }
-        }.environment(settings.first ?? ChosenSettings())
+        }.environment(settings.first ?? ChosenSettings()) // Set up environment
     }
 }

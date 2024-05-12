@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 extension String {
+    // Attempts to interpret the string as a color
     func toColor() -> Color {
         // Define color descriptions and their corresponding colors
         let colorMappings: [String: Color] = [

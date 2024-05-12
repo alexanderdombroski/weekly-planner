@@ -8,45 +8,32 @@
 import SwiftUI
 import SwiftData
 
+// Main Calendar View
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext // For removing, adding, etc.
-    @Query private var events: [Event]
+    @Query(sort: \Event.dayNum) private var events: [Event] // Gets events from persistant SwiftData
     @Environment(ChosenSettings.self) private var chosenSettings
     
+    // Toggle Bools that open sheet views
     @State private var showingSettings = false
     @State private var showingEventMenu = false
     
-    private var groupedEvents: [(Day, [Event])] {
-        // Group events by their day attribute
-        var eventsArray = Dictionary(grouping: events, by: { $0.day }).map { key, value in (key, value)}
-        
-        // Sort by start time
-        for index in eventsArray.indices {
-            eventsArray[index].1.sort { $0.startTime.hour < $1.startTime.hour }
-        }
-        
-        // Group by day
-        eventsArray.sort { $0.0.rawValue < $1.0.rawValue }
-        return eventsArray
-    }
     
     var body: some View {
         NavigationSplitView {
             List {
-                ForEach(groupedEvents, id: \.0) { day, dayEvents in
-                    Section(header: Text(day.rawValue)) {
-                        ForEach(dayEvents) { event in
-                            NavigationLink(destination: EventDetails(event: event)) {
-                                Text(event.title).foregroundStyle(event.color.toColor())
-                                Text(event.timeToString())
-                            }
-                        }
-                    }
+                ForEach(Array(zip(Day.allCases, chosenSettings.daysShowing)), id: \.0) { day, isShowing in
+                    isShowing ? // Ternary Operator only shows a day if true
+                    AnyView(DayList(
+                        titleDay: day.rawValue,
+                        events: filterEvents(day: day),
+                        militaryTime: chosenSettings.militaryTime
+                    )) : AnyView(EmptyView())
                 }
-                .onDelete(perform: deleteItems)
+                .onDelete(perform: deleteEvent)
             }
-            
             .toolbar {
+                // ----- Add Event Button -----
                 ToolbarItem {
                     Button() {
                         showingEventMenu.toggle()
@@ -54,6 +41,7 @@ struct ContentView: View {
                         Label("Add Item", systemImage: "plus")
                     }
                 }
+                // ----- Settings Button -----
                 ToolbarItem(placement: .topBarLeading) {
                     Button() {
                         showingSettings.toggle()
@@ -62,6 +50,7 @@ struct ContentView: View {
                     }
                 }
             }
+            // ----- Pages -----
             .sheet(isPresented: $showingSettings) {
                 SettingsView(settings: chosenSettings)
             }
@@ -72,12 +61,37 @@ struct ContentView: View {
             Text("Select an item")
         }
     }
-    func deleteItems(offsets: IndexSet) {
+    
+    // Delete an event
+    func deleteEvent(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
                 modelContext.delete(events[index])
             }
         }
     }
+    
+    // Filter by Day
+    private func filterEvents(day: Day) -> [Event] {
+        events.filter() { $0.day == day }
+    }
 }
 
+
+// A single Day section in the NavigationSplitView List
+struct DayList: View {
+    let titleDay: String
+    let events: [Event]
+    let militaryTime: Bool
+    
+    var body: some View {
+        Section(header: Text(titleDay)) {
+            ForEach(events) { event in
+                NavigationLink(destination: EventDetails(event: event)) {
+                    Text(event.title).foregroundStyle(event.color.toColor())
+                    Text(militaryTime ? event.timeToMilitary() : event.timeToString())
+                }
+            }
+        }
+    }
+}

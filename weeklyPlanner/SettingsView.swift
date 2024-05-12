@@ -14,16 +14,31 @@ struct SettingsView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
+            CheckBox(isChecked: settings.militaryTime, title: "Military Time") {
+                settings.militaryTime.toggle()
+            }
             ForEach(0..<7, id: \.self) { i in
-                Button() {
+                CheckBox(isChecked: settings.daysShowing[i], title: daysOfWeek[i]) {
                     settings.daysShowing[i].toggle()
-                } label: {
-                    HStack {
-                        Image(systemName: settings.daysShowing[i] ? "checkmark.square.fill" : "square")
-                        Text(daysOfWeek[i])
-                    }.font(.headline)
                 }
             }
+        }
+    }
+}
+
+// Creates a checkbox and automatically adjusts image from a Bool variable.
+struct CheckBox: View {
+    var isChecked: Bool
+    var title: String
+    var action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            HStack {
+                Image(systemName: isChecked ? "checkmark.square.fill" : "square")
+                Text(title)
+            }
+            .font(.headline)
         }
     }
 }

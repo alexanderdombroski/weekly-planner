@@ -7,8 +7,9 @@
 
 import SwiftUI
 
+// View that displays expanded details of the event
 struct EventDetails: View {
-    var event = Event(title: "Work", details: "Go to McDonalds", color: "blue")
+    var event: Event
     
     var body: some View {
         Text(event.title).font(.title)
